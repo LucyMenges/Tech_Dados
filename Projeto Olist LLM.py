@@ -15,10 +15,12 @@
 # %%
 # Importando a biblioteca Pandas
 import pandas as pd
+import datetime
+import numpy as np
 
 
 # %% [markdown]
-# ##Lendo os arquivos de Vendas Olist
+# ### Lendo os arquivos de Vendas Olist
 # Os arquivos csvs são referentes a vendas reais de e-commerce.
 
 # %%
@@ -76,9 +78,6 @@ order_reviews.info()
 # %%
 orders = pd.read_csv('olist_orders_dataset.csv')
 orders.head(10)
-
-# %% [markdown]
-#
 
 # %% [markdown]
 # orders: Dados a respeito do pedido (estampa de tempo da compra, aprovação, entrega para logística, recebimento, previsão de entrega).
@@ -169,13 +168,30 @@ orders['order_estimated_delivery_date'] = pd.to_datetime(
 
 orders.dtypes
 
-# %%
-
-orders.dtypes
-
 # %% [markdown]
 # - Quantidade de valores nulos nas colunas da Tabela 'Orders'
 
 # %%
 
 orders.isnull().sum()
+
+# %% [markdown]
+# - Tempo de entrega dos pedidos
+
+# %%
+# Acrescentando uma coluna com o tempo de entrega dos produtos em dias
+orders['tempo_entrega'] = (orders.order_delivered_customer_date -
+                           orders.order_approved_at) / np.timedelta64(1, 'D')
+orders.head()
+
+
+# %% [markdown]
+# 1. Qual é o tempo médio/mediano desde a aprovação do pedido até a sua entrega?
+
+# %%
+# TEMPO MÉDIO EM DIAS
+orders[orders.order_status != 'canceled'] .tempo_entrega.mean()
+
+# %%
+# TEMPO MEDIANO EM DIAS
+orders[orders.order_status != 'canceled'] .tempo_entrega.median()
