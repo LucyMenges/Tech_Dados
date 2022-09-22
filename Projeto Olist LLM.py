@@ -175,6 +175,25 @@ orders.dtypes
 
 orders.isnull().sum()
 
+# %%
+# orders_ApNan = lista de itens onde 'order_approved_at' é vazio (NaN)
+orders_ApNan = orders[orders.order_approved_at.isnull()]
+orders_ApNan
+
+# %% [markdown]
+# - orders_ApNan = data de aprovação e data de entrega estão vazios (NaN) e sem os pedidos cancelados.
+
+# %%
+orders_ApNan[(orders_ApNan.order_status != 'canceled') & (
+    orders_ApNan.order_delivered_customer_date.isnull())]
+
+
+# %%
+orders_ApNan[orders_ApNan.order_status != 'canceled']
+
+# %%
+(orders_ApNan[orders_ApNan.order_status != 'canceled']).shape
+
 # %% [markdown]
 # - Tempo de entrega dos pedidos
 
@@ -185,6 +204,32 @@ orders['tempo_entrega'] = (orders.order_delivered_customer_date -
 orders.head()
 
 
+# %%
+orders_b = orders[(orders.order_status != 'canceled') & (
+    orders.order_approved_at.isnull()) & (orders.order_delivered_customer_date.isnull())]
+orders_b
+
+# %%
+orders_bi = orders.index[(orders.order_status != 'canceled') & (
+    orders.order_approved_at.isnull()) & (orders.order_delivered_customer_date.isnull())]
+orders_bi
+
+# %%
+orders.shape
+
+# %%
+orders_com_filtro = orders.drop(orders_bi)
+orders_com_filtro
+
+# %%
+orders_validas = orders_com_filtro[(
+    orders_com_filtro.order_status != 'canceled')]
+orders_validas
+
+# %%
+print(orders.shape)
+print(orders_validas.shape)
+
 # %% [markdown]
 # 1. Qual é o tempo médio/mediano desde a aprovação do pedido até a sua entrega?
 
@@ -193,5 +238,15 @@ orders.head()
 orders[orders.order_status != 'canceled'] .tempo_entrega.mean()
 
 # %%
+# TEMPO MÉDIO EM DIAS
+orders_validas.tempo_entrega.mean()
+
+# %%
 # TEMPO MEDIANO EM DIAS
 orders[orders.order_status != 'canceled'] .tempo_entrega.median()
+
+# %%
+# TEMPO MEDIANO EM DIAS
+orders_validas.tempo_entrega.median()
+
+# %%
