@@ -4,7 +4,7 @@ Serão desenvolvidos três projetos durante a Residencia Tech de Analise Dados, 
 2. Projeto TCE
 3. Projeto
 
-##PROJETO OLIST
+## PROJETO OLIST
 
 * Na pasta 'Tabelas' desse repositório estão todas as tabelas utilizadas.
 * No arquivo 'Análise de Dados da Olist.docx' estão as observações/insights tidos durante a execução do projeto.
