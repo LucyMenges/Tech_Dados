@@ -88,22 +88,22 @@ orders.head(10)
 # %%
 orders.info()
 
-# %%
-products = pd.read_csv('Tabelas\olist_products_dataset.csv')
-products.head(10)
-
 # %% [markdown]
 # products: Informações sobre os produtos vendidos.
 
 # %%
+products = pd.read_csv('Tabelas\olist_products_dataset.csv')
+products.head(10) 
+
+# %%
 products.info()
+
+# %% [markdown]
+# sellers: informações sobre os vendedores
 
 # %%
 sellers = pd.read_csv('Tabelas\olist_sellers_dataset.csv')
 sellers.head(10)
-
-# %% [markdown]
-# sellers: informações sobre os vendedores
 
 # %%
 sellers.info()
@@ -246,9 +246,6 @@ orders_validas[orders_validas.tempo_entrega > 60].shape
 # %% [markdown]
 # - Distribuição do tempo de entrega em grupos para melhor análise.
 
-# %%
-
-
 # %% [markdown]
 # 1. Qual é o tempo médio/mediano desde a aprovação do pedido até a sua entrega?
 
@@ -272,59 +269,59 @@ orders_validas[orders_validas.tempo_entrega >= 0].tempo_entrega.median()
 # 2a. Qual o mês com maior quantidade de vendas (em número de pedido)
 
 # %% [markdown]
-#     - Criando a coluna com o mês e ano da data de compra do pedido
+#     - Criando um novo dataframe com coluna de mês e ano da data de compra do pedido, além dos pedidos.
 
 # %%
-orders['Mes_Ano_do_Pedido'] = orders['order_purchase_timestamp'].map(lambda x: 100*x.year +  x.month)
-orders.head()
+meses_compras = pd.DataFrame()
+meses_compras['mes'] = orders['order_purchase_timestamp'].dt.month
+meses_compras['ano'] = orders['order_purchase_timestamp'].dt.year
+meses_compras['Qtidade_pedidos'] = orders['order_id']
+meses_compras = meses_compras.groupby(['ano','mes'])['Qtidade_pedidos'].count().reset_index()
+
+meses_compras['ano_mes'] = meses_compras['ano'].astype(str) + '/' + meses_compras['mes'].astype(str)
+
+meses_compras.head()
+
+# %% [markdown]
+#     - Visualização da quantidade de vendas por Mês
 
 # %%
-orders['Mes_Pedido'] = orders['order_purchase_timestamp'].dt.month
-orders['Ano_Pedido'] = orders['order_purchase_timestamp'].dt.year
+grafico_pedidos = meses_compras.plot(kind='bar', x='ano_mes', y='Qtidade_pedidos', figsize=(25,8))
 
-orders.head()
+plt.title('Gráfico de Qtidade de Pedidos', fontsize=18, pad=20)
+plt.xlabel('Ano/Mês', size =14)
+plt.ylabel('Qtidade de Pedidos', size=14,)
+plt.show
 
-# %%
-orders.Mes_Ano_do_Pedido.value_counts().sort_index()
-
-# %%
-orders.groupby('Mes_Ano_do_Pedido')
 
 # %%
-Qtdade_Pedidos = orders.groupby('Mes_Ano_do_Pedido').order_id.count()
-Qtdade_Pedidos
-
-# %%
-orders.Mes_Ano_do_Pedido.value_counts().max()
-
-# %%
-plt.rcParams['figure.figsize'] = (25,8)
-plt.subplot(1,1,1)
-sns.distplot(Qtdade_Pedidos)
-plt.axis()
-plt.show()
-
-# %%
-orders.Mes_Ano_do_Pedido.value_counts().sort_index().plot()
+meses_compras.iloc[meses_compras[['Qtidade_pedidos']].idxmax()]
 
 # %% [markdown]
 # 2b. Qual o mês com os maiores pagamentos (pagamentos/Valores).
 
 # %%
-order_payment.head()
+meses_pagtos = pd.DataFrame()
+meses_pagtos['mes'] = orders['order_purchase_timestamp'].dt.month
+meses_pagtos['ano'] = orders['order_purchase_timestamp'].dt.year
+meses_pagtos['Total_Vendas'] = order_payment['payment_value']
+
+meses_pagtos = meses_pagtos.groupby(['ano','mes'])['Total_Vendas'].sum().reset_index()
+
+meses_pagtos['ano_mes1'] = meses_pagtos['ano'].astype(str) + '/' + meses_pagtos['mes'].astype(str)
+
+meses_pagtos
 
 # %%
-order_payment.info()
+grafico_pgtos = meses_pagtos.plot(kind='bar', x='ano_mes1', y='Total_Vendas', figsize=(25,8))
+
+plt.title('Gráfico de Total Vendas', fontsize=18, pad=20)
+plt.xlabel('Ano/Mês', size =14)
+plt.ylabel('Total_Vendas', size=14)
+plt.show
 
 # %%
-total_vendas_mes = pd.merge(orders , order_payment, how = 'inner', on = 'order_id')
-total_vendas_mes.head()
-
-# %%
-total_vendas_mes.groupby('Mes_Ano_do_Pedido').payment_value.sum()
-
-# %%
-total_vendas_mes.groupby('Mes_Ano_do_Pedido').payment_value.sum().max()
+meses_pagtos.iloc[meses_pagtos[['Total_Vendas']].idxmax()]
 
 # %% [markdown]
 # 3. Avalie a satisfação dos clientes: 
@@ -358,5 +355,65 @@ m.groupby('review_score').Diferença_Previsão_Realiz_Entrega.count()
 
 # %%
 m = pd.merge(tabela_1, tabela_2, how = 'inner', on = 'Nome')
+
+# %% [markdown]
+# 5.	Quais as categorias de produtos mais vendidos? E os menos vendidos? Existe relação com os preços dos itens? A quantidade de fotos impacta nas vendas?
+
+# %%
+categ_prod_vendas = pd.DataFrame()
+categ_prod_vendas['pedidos'] = order_payment['order_id']
+categ_prod_vendas['Total_Vendas'] = order_payment['payment_value']
+categ_prod_vendas['Produto'] = orders_items['product_id']
+categ_prod_vendas['Categorias'] = products['product_category_name']
+
+categ_prod_vendas = categ_prod_vendas.groupby(['Categorias'])['Total_Vendas'].sum().sort_values(ascending=False).reset_index()
+#categ_prod_vendas
+
+categ_prod_vendas
+
+# %%
+categ_prod_vendas['Total_Vendas'].sum()
+
+# %%
+categ_prod_vendas.iloc[categ_prod_vendas[['Total_Vendas']].idxmax()]
+
+# %%
+meses_pagtos = pd.DataFrame()
+meses_pagtos['mes'] = orders['order_purchase_timestamp'].dt.month
+meses_pagtos['ano'] = orders['order_purchase_timestamp'].dt.year
+meses_pagtos['Total_Vendas'] = order_payment['payment_value']
+
+meses_pagtos = meses_pagtos.groupby(['ano','mes'])['Total_Vendas'].sum().reset_index()
+
+meses_pagtos['ano_mes1'] = meses_pagtos['ano'].astype(str) + '/' + meses_pagtos['mes'].astype(str)
+
+meses_pagtos
+
+# %%
+
+
+# %% [markdown]
+# 6.	O volume e o peso dos produtos impactam no valor do frete?
+
+# %%
+
+
+# %% [markdown]
+# 7.	Avaliação/Visualização da posição geográfica onde se encontra a maior concentração de clientes e vendedores.
+
+# %%
+
+
+# %% [markdown]
+# 8.	As entregas atrasadas aconteceram entre vendedores/compradores de estados diferentes?
+
+# %%
+
+
+# %% [markdown]
+# 9.	Identificar o padrão dos clientes (localização, método de pagamento, quantidade de parcelas, entrega antes da previsão, notas de satisfação média, tipos de produtos) que fizeram uma recompra no site
+
+# %%
+
 
 
