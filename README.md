@@ -23,6 +23,10 @@ Responder, como Analista de dados, aos nove Backlog´s demandados pelo Product O
     * Sprint Planing 1.pdf: detalhes dos Backlog´s demandados pelo Product Owner, esquema dos dados e cronograma de execução.
     * Slides Apresentação para Harve.pdf: esses são os slides da apresentação das conclusões das demandas, apresentadas a banca da Harve, no dia 17.10.2022.
     * Apresentação detalhada Projeto 1 Olist.pdf: a transcrição da apresentação, com slides, explicações e conclusões sobre o banco de dados feitos por mim.
+    * Olist.ipynb: respostas do projeto em python, usando Jupiter. 
+    * Projeto Olist Script.py: respostas do projeto em python.<br/><br />
 
-    Análise de Dados da Olist.docx: estão as observações/insights tidos durante a execução do projeto.
-<br /><br />
+**Observações sobre Projeto:**<br /><br />
+Neste projeto não foi determinado uma ferramenta a ser usada, apenas uma sugestão para Python. A escolha ficou a critério de cada aluno. Eu iniciei utilizando **Python**, mesmo sem muita experiência com ele, com o **objetivo de praticar** porque havia feito um curso básico anteriormente. Consegui desenvolver sete das nove questões utilizando o Python, porém a minha maior **dificuldade**, entre outras, foi criar os gráficos para a visualização. Percebi que estava perdendo muito tempo em aprender a fazer os gráficos e não estava tendo o resultado que pretendia. Por isso decidi **reiniciar** o projeto utilizando o **Power BI**, com o qual pude resolver as questões e desenvolver as visualizações de maneira mais satisfatória, na minha opinião, por ter **mais experiência** com a ferramenta. Contudo essas mudanças me atrasaram e acabei deixando de responder duas demandas na apresentação para a banca. 
+Outro ponto que demandou muito tempo foi a limpeza dos dados dos estados para responder as questões sete e oito. Muitas cidades com grafias erradas e em estados diferentes dos originais. 
+
