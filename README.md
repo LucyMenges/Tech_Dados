@@ -21,7 +21,7 @@ Responder, como Analista de dados, aos nove Backlog´s demandados pelo Product O
 * Pasta > Tabelas: estão todas as tabelas utilizadas.
 * Arquivos:
     * Sprint Planing 1.pdf: detalhes dos Backlog´s demandados pelo Product Owner, esquema dos dados e cronograma de execução.
-    * Slides Apresentação para Harve.pdf: esses são os slides da apresentação das conclusões das demandas, apresentadas a banca da Harve, no dia 17.10.2022.
+    * Slides Apresentação para Harve.pdf: esses são os slides da apresentação das conclusões das demandas, apresentadas a banca da Harve, no dia 14.10.2022.
     * Apresentação detalhada Projeto 1 Olist.pdf: a transcrição da apresentação, com slides, explicações e conclusões sobre o banco de dados feitos por mim.
     * Olist.ipynb: respostas do projeto em python, usando Jupiter. 
     * Projeto Olist Script.py: respostas do projeto em python.<br/><br />
