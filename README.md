@@ -35,8 +35,8 @@ Outro ponto que demandou muito tempo foi a limpeza dos dados dos estados para re
 
 https://user-images.githubusercontent.com/78648122/223275650-d1078dbe-2e5c-46e2-b2b6-43f2786c5def.mp4
 
-
-<br /><br />
-Para ver o Overview das três apresentações dos projetos, clique no link: https://youtu.be/MBJQa1rW_VA
-
+<br/><br/>
+:speaker:  Ative o som, por favor!
+<br/>
+Para ver o Overview das três apresentações dos projetos, clique no link: https://youtu.be/MBJQa1rW_VA  <br/>
 Para ver a apresentação completa deste projeto, clique no link: https://youtu.be/e8BFurxC9Uk
